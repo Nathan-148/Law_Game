@@ -1,0 +1,124 @@
+body {
+    display: flex;
+    justify-content: space-between;
+    font-family: Arial, sans-serif;
+}
+.body_home {
+    margin: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+    background: url('images/tribunal.avif');
+	background-size: cover;
+}
+.div_home{
+    text-align: center;
+    width: 60%;
+    height: 300px;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.welcome{
+    color: white;
+    font-size: 50px;
+    padding: 20px 50px;
+}
+
+
+.winner {
+    display: flex;
+    justify-content: center;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/riche.avif');
+    width: 200px;
+    padding-bottom: 40%;
+}
+.winner h2{
+    color: rgb(255, 255, 255);
+}
+.looser {
+    display: flex;
+    justify-content: center;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/pauvre.jpg');
+    width: 200px;
+    padding-bottom: 40%;
+}
+.looser h2{
+    color: rgb(255, 255, 255);
+}
+
+.div_question{
+    text-align: center;
+    width: 60%;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.answers{
+    size: 200%;
+}
+#leaderboard {
+    width: 20%;
+}
+button {
+    background-color: #4CAF50; /* Couleur de fond verte */
+    color: white; /* Texte blanc */
+    border: none; /* Aucune bordure */
+    padding: 10px 20px; /* Padding intérieur */
+    margin: 5px; /* Marge externe pour séparer les boutons */
+    border-radius: 5px; /* Bords arrondis */
+    cursor: pointer; /* Curseur en forme de main au survol */
+    transition: background-color 0.3s; /* Transition douce de la couleur de fond */
+}
+button {
+    font-size: 16px; /* Taille de texte suffisante pour une bonne lisibilité */
+    width: auto; /* Largeur auto pour s'adapter au contenu */
+}
+button:hover {
+    background-color: #2fc536; /* Changement de couleur au survol */
+}
+button:active {
+    transform: scale(0.95); /* Réduit légèrement le bouton lors du clic */
+    background-color: #2e5c27; /* Couleur encore plus sombre lors du clic */
+}
+
+.score{
+    font-size: 120%;
+}
+
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#main.final {
+    font-size: 24px;
+    color: #333;
+    background: #f4f4f4;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+#nameInput{
+    padding: 10px;
+}
+#playButton{
+    background-color: rgb(168, 168, 168);
+}
+#start_quiz{
+    background-color: rgb(255, 247, 134);
+    margin-top: 20px;
+    margin-left: 150px;
+    margin-right: 150px;
+}
+#start_quiz h2{
+    color: #8d0000;
+    font-weight: 600;
+}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Law Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="data" href="data.csv">
+</head>
+<body>
+    <div class="winner" id="leaderboard">
+        <h2>Futur Lawyer</h2>
+        <ul id="lawyerList"></ul>
+    </div>
+
+    <div class="div_question" id="main">
+        <h2 id="question"></h2>
+        <div class="answers" id="answers"></div>
+        <h1></h1><h1></h1>
+        <p class="score" id="score"></p>
+    </div>
+
+    <div class="looser" id="leaderboard">
+        <h2>Futur Criminal</h2>
+        <ul id="criminalList"></ul>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="scripts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+</body>
+</html>
