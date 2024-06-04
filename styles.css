@@ -64,7 +64,7 @@ body {
     padding: 50px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: baseline;
 }
 .answers{
     size: 200%;
@@ -136,20 +136,20 @@ ul {
 }
 
 #lawyerList, #criminalList {
-    color: white; /* ou toute autre couleur visible sur votre fond */
+    color: rgba(0, 0, 0, 0); /* ou toute autre couleur visible sur votre fond */
     list-style-type: none; /* pour enlever les puces de la liste si nécessaire */
     padding: 0;
 }
 
 #lawyerList li, #criminalList li {
     margin: 5px 20px; /* espace entre les éléments de la liste */
-    background-color: rgba(0, 0, 0, 0.5); /* fond semi-transparent pour améliorer la lisibilité */
+    background-color: rgba(0, 0, 0, 0); /* fond semi-transparent pour améliorer la lisibilité */
     padding: 10px;
     border-radius: 5px; /* coins arrondis pour un meilleur look */
 }
 
 #lawyerList li, #criminalList li {
-    color: white; /* couleur du texte */
+    color: rgba(0, 0, 0, 0; /* couleur du texte */
     font-size: 1em; /* taille du texte */
     text-align: center;
 }
