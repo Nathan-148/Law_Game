@@ -4,7 +4,9 @@ body {
     font-family: Arial, sans-serif;
 }
 .body_home {
-    margin: 100px;
+    margin: 20px;
+    margin-left: 100px;
+    margin-right: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -34,15 +36,18 @@ body {
 .winner {
     display: flex;
     justify-content: center;
+    flex-direction: column;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/riche.avif');
     width: 200px;
     padding-bottom: 40%;
 }
 .winner h2{
     color: rgb(255, 255, 255);
+    text-align: center;
 }
 .looser {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/pauvre.jpg');
     width: 200px;
@@ -50,6 +55,7 @@ body {
 }
 .looser h2{
     color: rgb(255, 255, 255);
+    text-align: center;
 }
 
 .div_question{
@@ -112,7 +118,13 @@ ul {
 #playButton{
     background-color: rgb(168, 168, 168);
 }
-#start_quiz{
+#resetButton{
+    background-color: rgba(0,0,0,0);
+}
+#resetButton h6{
+    color: rgba(0,0,0,0);
+}
+#start_quiz {
     background-color: rgb(255, 247, 134);
     margin-top: 20px;
     margin-left: 150px;
@@ -121,4 +133,23 @@ ul {
 #start_quiz h2{
     color: #8d0000;
     font-weight: 600;
+}
+
+#lawyerList, #criminalList {
+    color: white; /* ou toute autre couleur visible sur votre fond */
+    list-style-type: none; /* pour enlever les puces de la liste si nécessaire */
+    padding: 0;
+}
+
+#lawyerList li, #criminalList li {
+    margin: 5px 20px; /* espace entre les éléments de la liste */
+    background-color: rgba(0, 0, 0, 0.5); /* fond semi-transparent pour améliorer la lisibilité */
+    padding: 10px;
+    border-radius: 5px; /* coins arrondis pour un meilleur look */
+}
+
+#lawyerList li, #criminalList li {
+    color: white; /* couleur du texte */
+    font-size: 1em; /* taille du texte */
+    text-align: center;
 }

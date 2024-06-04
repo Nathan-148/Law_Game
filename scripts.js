@@ -1,7 +1,5 @@
 let currentPlayer = '';
-let scores = {};
 let questions = [];
-
 let dataReady = false;
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -13,15 +11,12 @@ document.addEventListener('DOMContentLoaded', function() {
             if (results.data && results.data.length > 0) {
                 questions = results.data;
                 dataReady = true;
-                
             } else {
                 console.error("Pas de données dans le CSV ou erreur de chargement.");
             }
         }
     });
 });
-
-
 
 function startGame() {
     if (!dataReady) {
@@ -33,10 +28,13 @@ function startGame() {
         alert("Veuillez entrer un nom avant de commencer.");
         return;
     }
-    scores[currentPlayer] = scores[currentPlayer] || 0;
-    displayQuestion();  // Assurez-vous que cette fonction est appelée correctement
+    
+    if (!getPlayerScore(currentPlayer)) {
+        setPlayerScore(currentPlayer, 0);
+    }
+    
+    displayQuestion();
 }
-
 
 function displayQuestion() {
     if (questions.length === 0) {
@@ -45,9 +43,8 @@ function displayQuestion() {
         return;
     }
 
-    // Sélection aléatoire de la question et la retirer du tableau
     const questionIndex = Math.floor(Math.random() * questions.length);
-    const questionData = questions.splice(questionIndex, 1)[0];  // Cette méthode retire la question du tableau
+    const questionData = questions.splice(questionIndex, 1)[0];
     console.log("Question sélectionnée:", questionData);
 
     const questionElement = document.getElementById('question');
@@ -59,7 +56,7 @@ function displayQuestion() {
     }
 
     questionElement.textContent = questionData.Question;
-    answersElement.innerHTML = '';  // Effacez les réponses précédentes
+    answersElement.innerHTML = '';
 
     const answers = [questionData.Rep1, questionData.Rep2, questionData.Rep3, questionData.Rep4];
     shuffleArray(answers);
@@ -71,39 +68,32 @@ function displayQuestion() {
     });
 }
 
-
 window.onload = function() {
     displayQuestion();
 }
 
-
-
-
-
 function handleAnswer(selectedAnswer, correctAnswer) {
     console.log("Réponse choisie:", selectedAnswer, "Réponse correcte:", correctAnswer);
-    if (typeof scores[currentPlayer] !== 'number') {
-        console.error('Erreur : Le score actuel n\'est pas un nombre.');
-        scores[currentPlayer] = 0;  // Réinitialise le score si ce n'est pas un nombre
-    }
-
+    let score = getPlayerScore(currentPlayer) || 0;
+    
     if (selectedAnswer === correctAnswer) {
-        scores[currentPlayer] += 1;
+        score += 1;
     } else {
-        scores[currentPlayer] -= 1;
+        score -= 1;
     }
-    console.log("Score actuel après ajustement:", scores[currentPlayer]);
+    console.log("Score actuel après ajustement:", score);
+
+    setPlayerScore(currentPlayer, score);
+
     updateScoreDisplay();
     updateLeaderboards();
     displayQuestion();
 }
 
-
-
 function updateScoreDisplay() {
     const scoreElement = document.getElementById('score');
     if (scoreElement) {
-        scoreElement.textContent = "Score: " + (scores[currentPlayer] || 0); // Vérifiez que cette ligne fonctionne
+        scoreElement.textContent = "Score: " + (getPlayerScore(currentPlayer) || 0);
     } else {
         console.error("L'élément score n'a pas été trouvé dans le DOM");
     }
@@ -116,32 +106,85 @@ function shuffleArray(array) {
     }
 }
 
-function updateLeaderboards() {
-    updateLeaderboard('lawyerList', true);
-    updateLeaderboard('criminalList', false);
+function updatePlayerScore(name, score) {
+    let players = getAllPlayers();
+    let player = players.find(player => player.name === name);
+    if (!player) {
+        player = { name, score };
+        players.push(player);
+    } else {
+        player.score = score;
+    }
+    players.sort((a, b) => b.score - a.score);
+    saveAllPlayers(players);
 }
 
-function updateLeaderboard(listId, ascending) {
-    const list = document.getElementById(listId);
-    list.innerHTML = '';
-    const sortedPlayers = Object.entries(scores).sort((a, b) => ascending ? a[1] - b[1] : b[1] - a[1]);
-    sortedPlayers.slice(0, 5).forEach(([name, score]) => {
+function updateLeaderboards() {
+    const players = getAllPlayers();
+    const topPlayers = players.slice(0, 5);
+    const bottomPlayers = players.slice(-5);
+
+    const topList = document.getElementById('lawyerList');
+    const bottomList = document.getElementById('criminalList');
+
+    topList.innerHTML = '';
+    bottomList.innerHTML = '';
+
+    topPlayers.forEach(player => {
         const listItem = document.createElement('li');
-        listItem.textContent = `${name} : ${score}`;
-        list.appendChild(listItem);
+        listItem.textContent = `${player.name} : ${player.score}`;
+        topList.appendChild(listItem);
+    });
+
+    bottomPlayers.forEach(player => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${player.name} : ${player.score}`;
+        bottomList.appendChild(listItem);
     });
 }
 
 function displayFinalScore() {
     const mainElement = document.getElementById('main');
     if (mainElement) {
-        mainElement.innerHTML = `<h1>Finished !</h1><h2>Your final score is : ${scores[currentPlayer]}</h2>`;
+        mainElement.innerHTML = `<h1>Finished !</h1><h2>Your final score is : ${getPlayerScore(currentPlayer)}</h2>`;
         mainElement.classList.add('final');
-        // Lancer les confettis
         confetti({
             particleCount: 1000,
             spread: 100,
-            origin: { y: 1 } // pour que ça semble partir du bas de l'écran
+            origin: { y: 1 }
         });
     }
+}
+
+// Fonctions de gestion de localStorage
+function getPlayerScore(name) {
+    const players = getAllPlayers();
+    const player = players.find(player => player.name === name);
+    return player ? player.score : null;
+}
+
+function setPlayerScore(name, score) {
+    const players = getAllPlayers();
+    let player = players.find(player => player.name === name);
+    if (!player) {
+        players.push({ name, score });
+    } else {
+        player.score = score;
+    }
+    saveAllPlayers(players);
+}
+
+function getAllPlayers() {
+    return JSON.parse(localStorage.getItem('players')) || [];
+}
+
+function saveAllPlayers(players) {
+    localStorage.setItem('players', JSON.stringify(players));
+}
+
+function resetScores() {
+    localStorage.removeItem('players');
+    players = [];
+    updateLeaderboards();  // Met à jour les tableaux des leaders pour refléter les changements
+    alert('Scores and names have been reset.');
 }
